@@ -1,0 +1,48 @@
+{
+  "name": "nutifar",
+  "private": true,
+  "description": "The official TypeScript library for the nutifar API",
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm -r dev",
+    "clean": "pnpm -r clean",
+    "build1": "tsup",
+    "clean1": "rimraf dist",
+    "changeset": "npx changeset",
+    "version-packages": "npx changeset version",
+    "release": "npm run build && npm run version-packages && npx changeset publish",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "repository": {
+    "url": "https://github.com/BigYusuf/nutifar-mono/sdk"
+  },
+  "keywords": [
+    "nutifar",
+    "auth",
+    "multi-tenant authentication",
+    "user-agnostic authentication",
+    "vendor-agnostic authentication",
+    "staff-agnostic authentication",
+    "rbac",
+    "notification",
+    "typescript",
+    "nodejs",
+    "react",
+    "react-native",
+    "python",
+    "java",
+    "nextjs"
+  ],
+  "author": "BigYusuf",
+  "devDependencies": {
+    "@types/node": "^24.12.0",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  },
+  "packageManager": "pnpm@9.12.0+sha512.4abf725084d7bcbafbd728bfc7bee61f2f791f977fd87542b3579dcb23504d170d46337945e4c66485cd12d588a0c0e570ed9c477e7ccdd8507cf05f3f92eaca",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "picocolors": "^1.1.1"
+  }
+}

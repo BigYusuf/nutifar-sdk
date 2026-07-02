@@ -1,0 +1,42 @@
+{
+  "name": "@nutifar/expo",
+  "version": "0.0.1",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@nutifar/core": "workspace:*",
+    "expo-application": "^56.0.3",
+    "expo-constants": "^56.0.15",
+    "expo-device": "^56.0.4",
+    "expo-notifications": "^56.0.13",
+    "react-native-mmkv": "^4.3.1",
+    "socket.io-client": "^4.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@types/react-native": "^0.73.0"
+  }
+}
