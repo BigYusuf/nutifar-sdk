@@ -9,7 +9,7 @@ Integrate reliable web push notifications into any modern JavaScript application
 <p>
 
 [![npm](https://img.shields.io/npm/v/@nutifar/web)](https://www.npmjs.com/package/@nutifar/web)
-[![License](https://img.shields.io/github/license/BigYusuf/nutifar-sdk)](LICENSE)
+[![License](https://img.shields.io/github/license/BigYusuf/nutifar-sdk)](https://github.com/BigYusuf/nutifar-sdk/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/Node-%3E%3D18-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 
