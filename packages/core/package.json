@@ -1,7 +1,7 @@
 {
     "name": "@nutifar/core",
     "description": "Internal shared engine used by Nutifar SDKs. Not intended for direct use.",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "main": "./dist/index.js",
     "module": "./dist/index.mjs",
     "types": "./dist/index.d.ts",

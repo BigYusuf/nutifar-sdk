@@ -1,11 +1,11 @@
 import { createSDK } from "@nutifar/core";
 import { WebPushManager } from "./push/webPush";
-
+type Key = {
+  publicKey: string;
+  secretKey?: string;
+};
 export interface WebSDKConfig {
-  apiKey?: {
-    publicKey: string;
-    secretKey?: string;
-  };
+  apiKey?: Key | string;
 }
 
 type RequestConfig = {
@@ -30,7 +30,10 @@ export const createWebSDK = (config: WebSDKConfig = {}) => {
           (req: RequestConfig) => {
             req.headers = req.headers || {};
 
-            const key = apiKey?.secretKey ?? apiKey?.publicKey;
+            const key =
+              typeof apiKey === "string"
+                ? apiKey
+                : (apiKey?.secretKey ?? apiKey?.publicKey);
 
             if (key) {
               req.headers["x-api-key"] = key;
