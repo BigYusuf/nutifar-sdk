@@ -15,8 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/BigYusuf/nutifar-sdk.git"
+    "url": "git+https://github.com/BigYusuf/nutifar-sdk.git"
   },
+  "bugs": {
+    "url": "https://github.com/BigYusuf/nutifar-sdk/issues"
+  },
+  "homepage": "https://github.com/BigYusuf/nutifar-sdk#readme",
   "keywords": [
     "nutifar",
     "auth",

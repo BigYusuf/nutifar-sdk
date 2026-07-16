@@ -12,12 +12,10 @@ export const createDeviceModule = (client: DeviceClient) => ({
   // =========================
   // Register Device
   // =========================
-  register: (data: RegisterDeviceRequest) =>
-    client.post<RegisterDeviceRequest, GenericResponse>(
-      "/devices/register-device",
-      data,
-    ),
-
+  register: (data: RegisterDeviceRequest) => {
+    console.log("🔎 device module register received:", data);
+    return client.post<unknown, any>("/devices/register-device", data);
+  },
   // =========================
   // Unregister Device
   // =========================

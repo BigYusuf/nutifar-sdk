@@ -1,11 +1,8 @@
-import { createSDK } from "@nutifar/core";
+import { createSDK, UnauthorizedError, ValidationError } from "@nutifar/core";
 import { WebPushManager } from "./push/webPush";
-type Key = {
-  publicKey: string;
-  secretKey?: string;
-};
+
 export interface WebSDKConfig {
-  apiKey?: Key | string;
+  apiKey: string;
 }
 
 type RequestConfig = {
@@ -13,14 +10,14 @@ type RequestConfig = {
   url?: string;
 };
 
-export const createWebSDK = (config: WebSDKConfig = {}) => {
+export const Nutifar = (config: WebSDKConfig) => {
   const { apiKey } = config;
 
   // =========================================
   // CORE SDK (PRECONFIGURED BACKEND)
   // =========================================
   const sdk: any = createSDK({
-    baseURL: "https://api.nutifar.buzz/api/v1", // (fixed your backend url)
+    baseURL: "https://api.nutifar.buzz/api/v1",
 
     transport: {
       credentials: "include",
@@ -30,13 +27,17 @@ export const createWebSDK = (config: WebSDKConfig = {}) => {
           (req: RequestConfig) => {
             req.headers = req.headers || {};
 
-            const key =
-              typeof apiKey === "string"
-                ? apiKey
-                : (apiKey?.secretKey ?? apiKey?.publicKey);
+            const isSecret = apiKey.startsWith("sk_");
+            const isPublic = apiKey.startsWith("pk_");
 
-            if (key) {
-              req.headers["x-api-key"] = key;
+            if (isSecret) {
+              throw new ValidationError("Only Public key allowed for Web SDK");
+            }
+            if (!isPublic) {
+              throw new UnauthorizedError("Invalid Public key");
+            }
+            if (apiKey && isPublic) {
+              req.headers["x-api-key"] = apiKey;
             }
 
             return req;

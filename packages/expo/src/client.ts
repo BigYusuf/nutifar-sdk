@@ -2,10 +2,7 @@ import { createSDK } from "@nutifar/core";
 import { ExpoPushManager } from "./push/expo";
 
 export interface ExpoSDKConfig {
-  apiKey?: {
-    publicKey: string;
-    secretKey?: string;
-  };
+  apiKey: string;
 }
 
 type RequestConfig = {
@@ -13,14 +10,16 @@ type RequestConfig = {
   url?: string;
 };
 
-export const createExpoSDK = (config: ExpoSDKConfig = {}) => {
+export const Nutifar = (config: ExpoSDKConfig) => {
   const { apiKey } = config;
 
   // =========================================
   // CORE SDK (PRECONFIGURED BACKEND)
   // =========================================
   const sdk: any = createSDK({
-    baseURL: "http://localhost:6500/api/v1", // (fixed your backend url)
+    baseURL: "http://192.168.76.44:6500/api/v1", // (fixed your backend url)192.168.76.44
+    // baseURL: "http://localhost:6500/api/v1", // (fixed your backend url)
+    // baseURL: "https://api.nutifar.buzz/api/v1", // (fixed your backend url)
 
     transport: {
       credentials: "include",
@@ -30,10 +29,8 @@ export const createExpoSDK = (config: ExpoSDKConfig = {}) => {
           (req: RequestConfig) => {
             req.headers = req.headers || {};
 
-            const key = apiKey?.secretKey ?? apiKey?.publicKey;
-
-            if (key) {
-              req.headers["x-api-key"] = key;
+            if (apiKey) {
+              req.headers["x-api-key"] = apiKey;
             }
 
             return req;
@@ -41,9 +38,10 @@ export const createExpoSDK = (config: ExpoSDKConfig = {}) => {
         ],
       },
     },
+    debug: true,
   });
   sdk.push = new ExpoPushManager({
-    devices: sdk.devices,
+    devices: sdk.device,
     client: sdk,
   });
 

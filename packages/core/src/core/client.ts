@@ -1,41 +1,65 @@
 import { createHttp } from "./http";
+import { createLogger } from "./logger";
+
+type HttpOptions = {
+  headers?: Record<string, string>;
+  credentials?: RequestCredentials;
+};
+
+type ClientOptions = {
+  baseURL?: string;
+  transport?: any;
+  debug?: boolean;
+};
 
 export const createClient = ({
-  baseURL = "https://localhost:6500/api/v1/",
+  baseURL = "http://localhost:6500/api/v1",
   transport = {},
-}: {
-  baseURL: string;
-  transport?: any;
-}) => {
-  const http = createHttp(transport);
+  debug = false,
+}: ClientOptions = {}) => {
+  const logger = createLogger({ debug: debug });
+  const http = createHttp(transport, logger);
 
-  const request = (url: string) => baseURL + url;
+  const request = (url: string) =>
+    `${baseURL.replace(/\/$/, "")}/${url.replace(/^\//, "")}`;
 
   return {
-    get: (url: string, options: any = {}) =>
-      http({ url: request(url), method: "GET", ...options }),
+    get: <TResponse>(url: string, options: HttpOptions = {}) =>
+      http({
+        url: request(url),
+        method: "GET",
+        ...options,
+      }) as Promise<TResponse>,
 
-    post: (url: string, body: any, options: any = {}) =>
+    post: <TRequest, TResponse>(
+      url: string,
+      body: TRequest,
+      options: HttpOptions = {},
+    ) =>
       http({
         url: request(url),
         method: "POST",
         body,
         ...options,
-      }),
+      }) as Promise<TResponse>,
 
-    put: (url: string, body: any, options: any = {}) =>
+    put: <TRequest, TResponse>(
+      url: string,
+      body: TRequest,
+      options: HttpOptions = {},
+    ) =>
       http({
         url: request(url),
         method: "PUT",
         body,
         ...options,
-      }),
+      }) as Promise<TResponse>,
 
-    delete: (url: string, options: any = {}) =>
+    delete: <TResponse>(url: string, options: HttpOptions = {}) =>
       http({
         url: request(url),
         method: "DELETE",
         ...options,
-      }),
+      }) as Promise<TResponse>,
   };
 };

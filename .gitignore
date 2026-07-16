@@ -4,6 +4,5 @@ node_modules
 dist
 .env
 
-examples/
 # firebase.config.ts
 # firebase-messaging-sw.js

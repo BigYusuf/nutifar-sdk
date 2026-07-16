@@ -9,6 +9,7 @@ import { getExpoDeviceInfo } from "../utils/device";
 interface ExpoPushManagerOptions {
   devices: {
     register: (data: any) => Promise<any>;
+    // register: any;
     unregister: (data: any) => Promise<any>;
     refreshToken: (data: any) => Promise<any>;
     heartbeat?: (data: any) => Promise<any>;
@@ -29,24 +30,25 @@ export class ExpoPushManager {
   // =========================================
   async register(metadata?: Record<string, any>) {
     const { devices } = this.options;
-
+    console.log("📩 registering device...");
     if (!Device.isDevice) {
       throw new Error("Push notifications require a physical device");
     }
 
     // 1. Permission
     await requestPermission();
-
+    console.log("📩 permission granted");
     // 2. Get Expo push token
     const token = await getExpoPushToken();
+    console.log("📩 Expo push token:", token);
 
     const meta = getExpoDeviceInfo();
 
     // 3. Register device in backend
     const response = await devices.register({
       pushToken: token,
-      platform: "EXPO",
       provider: "EXPO",
+      platform: Platform?.OS.toUpperCase() || "UNKNOWN",
       metadata: { ...meta, ...metadata },
     });
 

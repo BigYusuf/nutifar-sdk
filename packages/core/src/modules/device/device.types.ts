@@ -9,8 +9,8 @@ export interface Device {
 
   nutifarTokenId: string;
 
-  provider: "FCM" | "APNS" | "WEBPUSH";
-  platform: "IOS" | "ANDROID" | "WEB";
+  provider: "FCM" | "APNS" | "WEBPUSH" | "EXPO";
+  platform: "IOS" | "ANDROID" | "WEB" | "UNKNOWN";
 
   pushToken: string;
 
@@ -26,7 +26,6 @@ export interface Device {
 }
 
 export interface RegisterDeviceRequest {
-  appId: string;
   pushToken: string;
   platform: string;
   provider: string;
@@ -35,23 +34,19 @@ export interface RegisterDeviceRequest {
 }
 
 export interface UnregisterDeviceRequest {
-  appId: string;
   pushToken: string;
 }
 
 export interface RefreshTokenRequest {
-  appId: string;
   oldToken: string;
   newToken: string;
 }
 
 export interface HeartbeatRequest {
-  appId: string;
   pushToken: string;
 }
 
 // export interface SendPushRequest {
-//   appId: string;
 //   title: string;
 //   body: string;
 //   data?: Record<string, any>;
