@@ -17,9 +17,14 @@ export const createSDK = ({
   const logger = createLogger({ debug: debug });
   const client = createClient({ baseURL, transport, debug });
 
+  const initialize = async () => {
+    return Promise.resolve();
+  };
+
   return {
     notification: createNotificationModule(client),
     device: createDeviceModule(client),
+    initialize,
     _logger: logger,
   };
 };

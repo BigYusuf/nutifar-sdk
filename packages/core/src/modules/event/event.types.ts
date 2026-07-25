@@ -28,6 +28,7 @@ export type CreateNotificationInput = {
   // metadata.from / metadata.fromEmail / metadata.fromName are read for sender resolution.
   metadata?: Record<string, any>;
 
+  inapp?: Record<string, any>;
   recipients: Recipient[];
 };
 

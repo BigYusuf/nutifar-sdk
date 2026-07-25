@@ -38,8 +38,9 @@ export interface UnregisterDeviceRequest {
 }
 
 export interface RefreshTokenRequest {
-  oldToken: string;
-  newToken: string;
+  pushToken: string;
+  platform?: string;
+  provider?: string;
 }
 
 export interface HeartbeatRequest {

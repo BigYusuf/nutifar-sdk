@@ -1,0 +1,47 @@
+import { createSDK, devUrl } from "@nutifar/core";
+
+import { ReactNativePushManager } from "./push/manager";
+
+export interface ReactNativeSDKConfig {
+  apiKey: string;
+}
+
+type RequestConfig = {
+  headers?: Record<string, string>;
+  url?: string;
+};
+
+export const createReactNativeClient = (config: ReactNativeSDKConfig) => {
+  const { apiKey } = config;
+
+  const sdk: any = createSDK({
+    baseURL: devUrl,
+
+    transport: {
+      credentials: "include",
+
+      interceptors: {
+        request: [
+          (req: RequestConfig) => {
+            req.headers = req.headers || {};
+
+            if (apiKey) {
+              req.headers["x-api-key"] = apiKey;
+            }
+
+            return req;
+          },
+        ],
+      },
+    },
+
+    debug: __DEV__,
+  });
+
+  sdk.push = new ReactNativePushManager({
+    devices: sdk.device,
+    client: sdk,
+  });
+
+  return sdk;
+};

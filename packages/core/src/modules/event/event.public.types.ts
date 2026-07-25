@@ -22,6 +22,8 @@ export type SendEmailInput = {
   type?: string;
   template?: { name: string; data?: Record<string, any> };
   metadata?: Record<string, any>;
+
+  inapp?: Record<string, any>;
 };
 
 export type SendSMSInput = {
@@ -30,6 +32,8 @@ export type SendSMSInput = {
   type?: string;
   template?: { name: string; data?: Record<string, any> };
   metadata?: Record<string, any>;
+
+  inapp?: Record<string, any>;
 };
 
 export type SendPushInput = {
@@ -39,6 +43,8 @@ export type SendPushInput = {
   type?: string;
   template?: { name: string; data?: Record<string, any> };
   metadata?: Record<string, any>;
+
+  inapp?: Record<string, any>;
 };
 
 export type SendInAppInput = {

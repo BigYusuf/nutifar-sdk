@@ -13,7 +13,7 @@ type ClientOptions = {
 };
 
 export const createClient = ({
-  baseURL = "http://localhost:6500/api/v1",
+  baseURL = "https://api.nutifar.buzz/api/v1",
   transport = {},
   debug = false,
 }: ClientOptions = {}) => {

@@ -9,13 +9,12 @@ import { getExpoDeviceInfo } from "../utils/device";
 interface ExpoPushManagerOptions {
   devices: {
     register: (data: any) => Promise<any>;
-    // register: any;
     unregister: (data: any) => Promise<any>;
     refreshToken: (data: any) => Promise<any>;
     heartbeat?: (data: any) => Promise<any>;
   };
 
-  client: any; // core SDK instance
+  client: any;
 }
 
 export class ExpoPushManager {
@@ -23,6 +22,8 @@ export class ExpoPushManager {
 
   constructor(options: ExpoPushManagerOptions) {
     this.options = options;
+
+    this.listenForTokenRefresh();
   }
 
   // =========================================
@@ -30,26 +31,27 @@ export class ExpoPushManager {
   // =========================================
   async register(metadata?: Record<string, any>) {
     const { devices } = this.options;
+
     console.log("📩 registering device...");
+
     if (!Device.isDevice) {
       throw new Error("Push notifications require a physical device");
     }
 
-    // 1. Permission
     await requestPermission();
-    console.log("📩 permission granted");
-    // 2. Get Expo push token
+
     const token = await getExpoPushToken();
-    console.log("📩 Expo push token:", token);
 
     const meta = getExpoDeviceInfo();
 
-    // 3. Register device in backend
     const response = await devices.register({
       pushToken: token,
       provider: "EXPO",
-      platform: Platform?.OS.toUpperCase() || "UNKNOWN",
-      metadata: { ...meta, ...metadata },
+      platform: Platform.OS.toUpperCase(),
+      metadata: {
+        ...meta,
+        ...metadata,
+      },
     });
 
     return {
@@ -59,19 +61,28 @@ export class ExpoPushManager {
   }
 
   // =========================================
-  // REFRESH TOKEN
+  // LISTEN FOR TOKEN REFRESH
   // =========================================
-  async refreshToken(oldToken: string) {
+  private listenForTokenRefresh() {
     const { devices } = this.options;
 
-    const newToken = await getExpoPushToken();
+    return Notifications.addPushTokenListener(async (token) => {
+      try {
+        const pushToken = token.data;
 
-    await devices.refreshToken({
-      oldToken,
-      newToken,
+        console.log("🔄 Expo push token changed:", pushToken);
+
+        await devices.refreshToken({
+          pushToken,
+          provider: "EXPO",
+          platform: Platform.OS.toUpperCase(),
+        });
+
+        console.log("✅ Expo push token refreshed");
+      } catch (error) {
+        console.error("❌ Failed to refresh Expo push token", error);
+      }
     });
-
-    return newToken;
   }
 
   // =========================================
@@ -112,10 +123,12 @@ export class ExpoPushManager {
   }
 
   // =========================================
-  // HEARTBEAT (OPTIONAL)
+  // HEARTBEAT
   // =========================================
   async heartbeat(pushToken: string) {
-    if (!this.options.devices.heartbeat) return;
+    if (!this.options.devices.heartbeat) {
+      return;
+    }
 
     return this.options.devices.heartbeat({
       pushToken,
@@ -127,6 +140,7 @@ export class ExpoPushManager {
   // =========================================
   async getPermissionStatus() {
     const { status } = await Notifications.getPermissionsAsync();
+
     return status;
   }
 

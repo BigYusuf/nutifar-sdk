@@ -2,9 +2,9 @@
 
 <div align="center">
 
-<h3>Cross-platform Push Notification Infrastructure</h3>
+<h3>Cross-platform Notification Infrastructure</h3>
 
-Build, manage, and deliver reliable push notifications across **Web**, **Expo**, and **React Native** with a single SDK ecosystem.
+Build and integrate reliable notifications across **Web, Node.js, Expo, and React Native** with a unified SDK ecosystem.
 
 <p>
 
@@ -21,15 +21,17 @@ Build, manage, and deliver reliable push notifications across **Web**, **Expo**,
 
 ## Why Nutifar?
 
-Nutifar provides a modern SDK for integrating push notifications into your applications without worrying about platform-specific implementations.
+Nutifar provides a unified SDK ecosystem for integrating notification infrastructure into modern applications.
 
-* 🌐 One SDK ecosystem for Web, Expo, and React Native
+Instead of managing platform-specific notification implementations independently, use the Nutifar SDK built for your platform.
+
+* 🌐 One SDK ecosystem across multiple platforms
 * ⚡ Lightweight and tree-shakeable
 * 🔒 Secure API communication
 * 📦 TypeScript-first developer experience
-* 🔔 Built for Firebase Cloud Messaging (FCM)
-* 🧩 Framework agnostic
-* 🛠 Zero-config Web CLI
+* 🔔 Built for production notification infrastructure
+* 🧩 Platform-specific SDKs with a shared core
+* 🛠 Developer-focused CLI
 * 🚀 Designed for production applications
 
 ---
@@ -39,48 +41,119 @@ Nutifar provides a modern SDK for integrating push notifications into your appli
 | Platform        | Package                 | Status         |
 | --------------- | ----------------------- | -------------- |
 | 🌐 Web          | `@nutifar/web`          | ✅ Stable       |
-| 📱 Expo         | `@nutifar/expo`         | 🚧 Coming Soon |
-| 📲 React Native | `@nutifar/react-native` | 🚧 Coming Soon |
+| 📱 Expo         | `@nutifar/expo`         | ✅ Stable       |
+| 📲 React Native | `@nutifar/react-native` | ✅ Stable       |
+| 🟢 Node.js      | `@nutifar/node`         | ✅ Stable       |
+| 🐍 Python       | `@nutifar/python`       | 🚧 Coming Soon |
+| 🐘 Laravel      | `@nutifar/laravel`      | 🚧 Coming Soon |
+
+---
+
+# SDK Ecosystem
+
+Nutifar uses a shared internal core with platform-specific SDKs.
+
+```text
+@nutifar/core
+       │
+       ├── @nutifar/web
+       ├── @nutifar/expo
+       ├── @nutifar/react-native
+       ├── @nutifar/node
+       ├── @nutifar/python
+       └── @nutifar/laravel
+```
+
+Most developers should install the SDK for their platform.
+
+`@nutifar/core` is an internal shared engine and is not intended for direct use.
 
 ---
 
 # Installation
 
+Install the SDK for your platform.
+
+### Web
+
 ```bash
 npm install @nutifar/web
 ```
-
-or
 
 ```bash
 pnpm add @nutifar/web
 ```
 
-or
+### Expo
 
 ```bash
-yarn add @nutifar/web
+npm install @nutifar/expo
+```
+
+### React Native
+
+```bash
+npm install @nutifar/react-native
+```
+
+### Node.js
+
+```bash
+npm install @nutifar/node
 ```
 
 ---
 
-# Initialize your project
+# Nutifar CLI
 
-After installing the SDK, initialize your project:
+Nutifar provides a developer-focused CLI for managing the Nutifar SDK ecosystem.
+
+Install or run the CLI:
 
 ```bash
-npx nutifar init
+npx nutifar
 ```
 
-The CLI will automatically:
+The CLI can detect your project and help install the correct Nutifar SDK.
 
-* Copy the required `firebase-messaging-sw.js`
-* Create the `public/` directory if necessary
-* Prepare your project for Web Push Notifications
+```text
+NUTIFAR
+
+? What do you want to do?
+❯ Setup Nutifar
+  Install an SDK
+  Check project
+  View SDK info
+  Exit
+```
+
+### Available CLI features
+
+* 🔍 Automatic project detection
+* 📦 SDK installation
+* 🩺 Project diagnostics
+* 📋 SDK information
+* 🔄 SDK upgrades
+
+The CLI package is:
+
+```text
+@nutifar/cli
+```
+
+The CLI command is:
+
+```bash
+nutifar
+```
 
 ---
 
 # Quick Start
+
+The SDK API depends on the platform you are building for.
+
+### Web
 
 ```ts
 import { Nutifar } from "@nutifar/web";
@@ -92,15 +165,22 @@ const nutifar = new Nutifar({
 await nutifar.initialize();
 ```
 
+For platform-specific installation and usage, see the README for the SDK you are using.
+
 ---
 
 # Monorepo Structure
 
 ```text
 packages/
+├── core/
 ├── web/
 ├── expo/
-└── react-native/
+├── react-native/
+├── node/
+├── python/
+├── laravel/
+└── cli/
 
 examples/
 ├── vite/
@@ -113,26 +193,26 @@ examples/
 
 # Local Development
 
-Clone the repository
+Clone the repository:
 
 ```bash
 git clone https://github.com/BigYusuf/nutifar-sdk.git
 cd nutifar-sdk
 ```
 
-Install dependencies
+Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-Build all packages
+Build all packages:
 
 ```bash
 pnpm build
 ```
 
-Start development mode
+Start development mode:
 
 ```bash
 pnpm dev
@@ -140,28 +220,9 @@ pnpm dev
 
 ---
 
-# CLI
-
-The Web SDK ships with a built-in CLI.
-
-```bash
-nutifar init
-```
-
-Additional commands planned:
-
-```bash
-nutifar doctor
-nutifar upgrade
-nutifar --version
-nutifar --help
-```
-
----
-
 # Examples
 
-Complete working examples are available for:
+Working examples are available for:
 
 * React + Vite
 * Next.js
@@ -172,21 +233,24 @@ Complete working examples are available for:
 
 # Roadmap
 
-### Current
+### Available
 
 * ✅ Web SDK
-* ✅ Web CLI
+* ✅ Expo SDK
+* ✅ React Native SDK
+* ✅ Node.js SDK
+* ✅ Nutifar CLI
 
 ### Coming Soon
 
-* 🚧 Expo SDK
-* 🚧 React Native SDK
+* 🚧 Python SDK
+* 🚧 Laravel SDK
 * 🚧 Notification Inbox
 * 🚧 Analytics
 * 🚧 Message Templates
 * 🚧 Offline Queue
 * 🚧 Dashboard SDK
-* 🚧 Server SDK
+* 🚧 Server SDK improvements
 
 ---
 

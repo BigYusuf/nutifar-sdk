@@ -17,7 +17,17 @@ interface WebPushManagerOptions {
 
 export class WebPushManager {
   private options: WebPushManagerOptions;
+  private getCachedToken() {
+    return localStorage.getItem("nutifar_push_token");
+  }
 
+  private cacheToken(token: string) {
+    localStorage.setItem("nutifar_push_token", token);
+  }
+
+  private clearCachedToken() {
+    localStorage.removeItem("nutifar_push_token");
+  }
   constructor(options: WebPushManagerOptions) {
     this.options = options;
   }
@@ -53,6 +63,9 @@ export class WebPushManager {
       metadata: { ...meta, ...metadata },
     });
 
+    // Cache the current token
+    localStorage.setItem("nutifar_push_token", token);
+
     return {
       token,
       response,
@@ -60,33 +73,68 @@ export class WebPushManager {
   }
 
   // =========================================
-  // Refresh Existing Push Token
+  // Sync Device Registration
   // =========================================
-  async refreshToken(oldToken: string) {
+  async syncDevice() {
     const { devices } = this.options;
 
-    // 1. Initialize Firebase
+    // Browser doesn't support push
+    if (!this.isSupported()) {
+      return {
+        synced: false,
+        reason: "unsupported",
+      };
+    }
+
+    // User denied notifications
+    if (Notification.permission !== "granted") {
+      return {
+        synced: false,
+        reason: "permission-denied",
+      };
+    }
+
+    // Initialize Firebase
     const { messaging } = initializeFirebase(firebaseConfig);
 
-    // 2. Ensure service worker exists
+    // Register service worker
     const serviceWorkerRegistration = await registerServiceWorker();
 
-    // 3. Generate new token
-    const newToken = await generatePushToken({
+    // Get current FCM token
+    const currentToken = await generatePushToken({
       messaging,
       vapidKey: firebaseConfig?.vapidKey,
       serviceWorkerRegistration,
     });
 
-    // 4. Sync backend
+    // Compare against cached token
+    const cachedToken = localStorage.getItem("nutifar_push_token");
+
+    // Already in sync
+    if (cachedToken === currentToken) {
+      return {
+        synced: true,
+        changed: false,
+        token: currentToken,
+      };
+    }
+
+    // Notify backend
     await devices.refreshToken({
-      oldToken,
-      newToken,
+      pushToken: currentToken,
+      provider: "FCM",
+      platform: "WEB",
     });
 
-    return newToken;
-  }
+    // Cache latest token
+    localStorage.setItem("nutifar_push_token", currentToken);
 
+    return {
+      synced: true,
+      changed: true,
+      token: currentToken,
+    };
+  }
   // =========================================
   // Listen For Foreground Messages
   // =========================================
@@ -99,12 +147,19 @@ export class WebPushManager {
   // =========================================
   // Unregister Device
   // =========================================
-  async unregister(pushToken: string) {
-    return this.options.devices.unregister({
-      pushToken,
-    });
-  }
+  async unregister(pushToken?: string) {
+    const token = pushToken ?? this.getCachedToken();
 
+    if (!token) {
+      return;
+    }
+
+    await this.options.devices.unregister({
+      pushToken: token,
+    });
+
+    this.clearCachedToken();
+  }
   // =========================================
   // Heartbeat / Keep Alive
   // =========================================

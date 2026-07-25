@@ -1,9 +1,9 @@
 {
   "name": "@nutifar/expo",
-  "version": "0.0.1",
-  "main": "./src/index.ts",
-  "module": "./src/index.ts",
-  "types": "./src/index.ts",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
@@ -16,10 +16,18 @@
     "dev": "tsup --watch",
     "clean": "rm -rf dist"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "Nutifar",
+    "SDK",
+    "React Native",
+    "Expo",
+    "Push Notifications",
+    "Realtime",
+    "Socket.IO"
+  ],
+  "author": "BigYusuf",
   "license": "ISC",
-  "description": "",
+  "description": "Nutifar SDK for Expo React Native",
   "dependencies": {
     "@nutifar/core": "workspace:*",
     "expo-application": "^56.0.3",

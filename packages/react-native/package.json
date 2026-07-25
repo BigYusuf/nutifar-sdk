@@ -1,0 +1,42 @@
+{
+  "name": "@nutifar/react-native",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Nutifar SDK for Bare React Native",
+  "dependencies": {
+    "@nutifar/core": "workspace:*",
+    "@react-native-firebase/messaging": "^25.1.0",
+    "react-native-mmkv": "^4.3.1",
+    "socket.io-client": "^4.8.3"
+  },
+  "peerDependencies": {
+    "react": "*",
+    "react-native": "*",
+    "react-native-device-info": ">=10.0.0"
+  },
+  "peerDependenciesMeta": {
+    "react-native-device-info": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/react-native": "^0.73.0"
+  }
+}

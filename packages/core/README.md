@@ -8,6 +8,6 @@ Core
 More internal:
 
 ```md
-# @yourorg/auth-core
+# @nutifar/core
 
-Core logic for YourAuth SDK (not intended for direct use)
+Core logic for Nutifar SDK (not intended for direct use)
