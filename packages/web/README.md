@@ -95,7 +95,6 @@ const nutifar = new Nutifar({
   apiKey: "YOUR_PUBLIC_API_KEY",
 });
 
-await nutifar.initialize();
 ```
 
 ---

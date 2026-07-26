@@ -1,6 +1,6 @@
 {
   "name": "@nutifar/node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Official Nutifar Node SDK",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

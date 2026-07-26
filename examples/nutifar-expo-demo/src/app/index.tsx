@@ -40,7 +40,7 @@ export default function HomeScreen() {
   // optional: listen for foreground messages
   useEffect(() => {
     console.log("📩 test push:", status);
-    console.log("sdk", sdk.device);
+    // console.log("sdk", sdk.device);
     sdk.push.listen((payload: any) => {
       console.log("📩 Foreground push:", payload);
       setStatus("received foreground message");

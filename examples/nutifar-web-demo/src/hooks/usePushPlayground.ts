@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 import { usePlaygroundStore } from "../store/playground.store";
 
@@ -19,11 +20,8 @@ function createEvent(
 ) {
   return {
     id: crypto.randomUUID(),
-
     message,
-
     level,
-
     timestamp: new Date().toLocaleTimeString(),
   };
 }
@@ -42,7 +40,17 @@ export function usePushPlayground() {
         await sdk.initialize();
 
         // keep browser registration up to date
-        await sdk.push.syncDevice();
+        const result = await sdk.push.syncDevice();
+
+        if (result?.token) {
+          store.setDevice({
+            id: result.token,
+            token: result.token,
+            platform: "WEB",
+            browser: navigator.userAgent,
+            registered: true,
+          });
+        }
 
         store.setInitialized(true);
         store.addEvent(createEvent("SDK initialized", "success"));
@@ -63,7 +71,6 @@ export function usePushPlayground() {
   async function requestPermission() {
     try {
       store.setLoadingPermission(true);
-
       store.addEvent(createEvent("Requesting permission"));
 
       await sdk.push.requestPermission();
@@ -87,14 +94,13 @@ export function usePushPlayground() {
   async function registerDevice() {
     try {
       store.setLoadingRegister(true);
-
       store.addEvent(createEvent("Registering device"));
 
       const result = await sdk.push.register();
-
       store.setDevice({
-        id: result.response.device.id,
-        token: result.token,
+        id:
+          result.response?.data?.nutifarToken ?? result.response?.nutifarToken,
+        token: result.response?.data?.nutifarToken,
         platform: "WEB",
         browser: navigator.userAgent,
         registered: true,
@@ -121,12 +127,12 @@ export function usePushPlayground() {
 
       store.addEvent(createEvent("Sending notification"));
 
-      const response = await sdk.push.send({
+      const response = await sdk.notification.sendPush({
+        to: store.device?.token,
         title,
         body,
         data: data.trim() ? JSON.parse(data) : {},
       });
-
       store.setResponse(response);
 
       store.addEvent(createEvent("Push queued", "success"));
@@ -149,15 +155,12 @@ export function usePushPlayground() {
    */
   useEffect(() => {
     const unsubscribe = sdk.push.listen((payload: any) => {
+      toast.success(payload?.notification?.title || "Push received");
       store.addNotification({
         id: crypto.randomUUID(),
-
-        title: payload.data.notification.title,
-
-        body: payload.data.notification.body,
-
-        data: payload.data.data,
-
+        title: payload.notification.title,
+        body: payload.notification.body,
+        data: payload.data,
         receivedAt: new Date().toLocaleTimeString(),
       });
 

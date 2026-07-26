@@ -1,5 +1,12 @@
 # nutifar-expo-demo
 
+## 1.0.3
+
+### Patch Changes
+
+- Updated dependencies
+  - @nutifar/expo@1.0.1
+
 ## 1.0.2
 
 ### Patch Changes

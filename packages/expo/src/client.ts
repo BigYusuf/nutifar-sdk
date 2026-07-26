@@ -1,4 +1,4 @@
-import { createSDK, devUrl } from "@nutifar/core";
+import { createSDK } from "@nutifar/core";
 import { ExpoPushManager } from "./push/expo";
 
 export interface ExpoSDKConfig {
@@ -17,7 +17,7 @@ export const Nutifar = (config: ExpoSDKConfig) => {
   // CORE SDK (PRECONFIGURED BACKEND)
   // =========================================
   const sdk: any = createSDK({
-    baseURL: devUrl,
+    baseURL: "https://api.nutifar.buzz/api/v1",
 
     transport: {
       credentials: "include",

@@ -1,6 +1,6 @@
 {
-	"name": "@nutifar/frontend",
-	"version": "0.0.1",
+	"name": "@nutifar/web-demo",
+	"version": "0.0.2",
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
@@ -9,7 +9,7 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
-		"@nutifar/web": "^1.0.0",
+		"@nutifar/web": "^1.0.1",
 		"@tanstack/react-query": "^5.90.21",
 		"axios": "^1.13.2",
 		"class-variance-authority": "^0.7.1",

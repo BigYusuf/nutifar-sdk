@@ -9,7 +9,6 @@ import SectionHeader from "@/components/SectionHeader";
 import SendPushCard from "@/components/SendPushCard";
 import StatBadge from "@/components/StatBadge";
 import StatusCard from "@/components/StatusCard";
-import type { ReactNode } from "react";
 import { usePushPlayground } from "@/hooks/usePushPlayground";
 
 export default function PushPlaygroundPage() {
@@ -28,16 +27,15 @@ export default function PushPlaygroundPage() {
     sendPush,
   } = usePushPlayground();
 
-  const typedResponse = response as ReactNode;
-  const typedEvents = events as unknown as Event[];
-
+  const typedResponse = response as any;
+  // const typedEvents = events as any as Event[];
+  
   return (
     <main className="container max-w-7xl py-12">
       <SectionHeader
         title="Push Playground"
         description="Test the complete @nutifar/web push notification lifecycle: permission, device registration, sending and receiving notifications."
       />
-
       {/* Stats */}
       <div className="mb-8 grid gap-4 md:grid-cols-3">
         <StatBadge label="SDK" value={initialized ? "Ready" : "Loading"} />
@@ -49,10 +47,7 @@ export default function PushPlaygroundPage() {
           value={device?.registered ? "Registered" : "Not Registered"}
         />
       </div>
-
-      {/** Test */}
       <div className="grid gap-6 lg:grid-cols-3">
-        {/* MAIN COLUMN */}
         <div className="space-y-6 lg:col-span-2">
           <RegisterDeviceCard
             permission={permission}
@@ -72,7 +67,6 @@ export default function PushPlaygroundPage() {
           <NotificationFeed notifications={notifications} />
         </div>
 
-        {/* SIDEBAR */}
         <aside className="space-y-6">
           <StatusCard
             items={[
@@ -103,12 +97,10 @@ export default function PushPlaygroundPage() {
 
           <DeviceCard device={device} />
 
-          {/* <EventLog events={events} /> */}
+          <EventLog events={events} />
         </aside>
       </div>
-
-      {/* SDK RESPONSE */}
-      {response && (
+      {typedResponse && (
         <div className="mt-6">
           <JsonViewer data={typedResponse} />
         </div>

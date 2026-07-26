@@ -131,8 +131,8 @@ importers:
   examples/nutifar-web-demo:
     dependencies:
       '@nutifar/web':
-        specifier: ^1.0.0
-        version: 1.0.0
+        specifier: ^1.0.1
+        version: 1.0.1
       '@tanstack/react-query':
         specifier: ^5.90.21
         version: 5.101.4(react@19.2.3)
@@ -2090,11 +2090,11 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@nutifar/core@1.0.2':
-    resolution: {integrity: sha512-MVaGn61kn8589gmm8blZOPWxF6KTIrXCk6khPd32XJQDAyslz+0kCF0gHf5I7Xq0tsg1MmOcNSTpdGVgzA0Tcw==}
+  '@nutifar/core@1.0.3':
+    resolution: {integrity: sha512-cvKvGrnHkypf4flSmv25JAyP1M7K2DGukINg+iEPOIeb7f0Il+Hz+CNo6eIW91KcKY6nI84gN8KsYhGR7sBayg==}
 
-  '@nutifar/web@1.0.0':
-    resolution: {integrity: sha512-shZllpkYDHcE5I8ry5+YJG8MkFm725e1AHxrOWJX3e+5GYQo6V47KTeIx7JEJiUJDscTXFDiT3LbziZ5wqmlpA==}
+  '@nutifar/web@1.0.1':
+    resolution: {integrity: sha512-iBlU6PpSt+kgRYz1W3tPOR6Q/teq+CpziZ8KDhhv0/jVMv+u/DLoCgJVX4+ik6b6gb5ofkof9b8cV+QLeQWo2w==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -7943,14 +7943,14 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.20.1
 
-  '@nutifar/core@1.0.2':
+  '@nutifar/core@1.0.3':
     dependencies:
       qs: 6.15.3
       zod: 4.4.3
 
-  '@nutifar/web@1.0.0':
+  '@nutifar/web@1.0.1':
     dependencies:
-      '@nutifar/core': 1.0.2
+      '@nutifar/core': 1.0.3
       firebase: 12.16.0
       ua-parser-js: 2.0.10
     transitivePeerDependencies:
@@ -8315,9 +8315,7 @@ snapshots:
       metro-runtime: 0.84.4
     transitivePeerDependencies:
       - '@babel/core'
-      - bufferutil
       - supports-color
-      - utf-8-validate
 
   '@react-native/normalize-colors@0.74.89': {}
 

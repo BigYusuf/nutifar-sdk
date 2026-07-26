@@ -26,11 +26,11 @@ export default function RegisterDeviceCard({
       subtitle="Register this browser for push notifications."
     >
       <div className="space-y-5">
-        <div>
+        {/* <div>
           <p className="text-sm text-neutral-500">Permission</p>
 
           <p className="font-medium capitalize">{permission}</p>
-        </div>
+        </div> */}
 
         <div>
           <p className="text-sm text-neutral-500">Device Token</p>
@@ -45,17 +45,18 @@ export default function RegisterDeviceCard({
         </div>
 
         <div className="flex gap-3">
-          <button
+          {/* <button
             onClick={onRequestPermission}
             disabled={loadingPermission}
             className="rounded-lg border border-neutral-700 px-4 py-2 hover:bg-neutral-800"
           >
             Request Permission
-          </button>
+          </button> */}
 
           <button
             onClick={onRegister}
-            disabled={permission !== "granted" || loadingRegister}
+            disabled={loadingRegister}
+            // disabled={permission !== "granted" || loadingRegister}
             className="rounded-lg bg-white px-4 py-2 text-black disabled:opacity-50"
           >
             Register Device

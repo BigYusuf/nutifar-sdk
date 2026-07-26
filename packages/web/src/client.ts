@@ -18,6 +18,7 @@ export const Nutifar = (config: WebSDKConfig) => {
   // =========================================
   const sdk: any = createSDK({
     baseURL: "https://api.nutifar.buzz/api/v1",
+    // baseURL: "http://localhost:6500/api/v1",
 
     transport: {
       credentials: "include",

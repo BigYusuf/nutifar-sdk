@@ -1,5 +1,13 @@
 # @nutifar/react-native
 
+## 1.0.1
+
+### Patch Changes
+
+- Core was adjusted as the mapper was moved to the backend instaed of the frontend
+- Updated dependencies
+  - @nutifar/core@1.0.3
+
 ## 1.0.0
 
 ### Major Changes

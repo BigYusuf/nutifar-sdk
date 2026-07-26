@@ -64,7 +64,11 @@ export class WebPushManager {
     });
 
     // Cache the current token
-    localStorage.setItem("nutifar_push_token", token);
+    localStorage.setItem(
+      "nutifar_push_token",
+      response?.data?.nutifarToken ?? token,
+    );
+    localStorage.setItem("nutifar_fcm_token", token);
 
     return {
       token,
@@ -108,31 +112,33 @@ export class WebPushManager {
     });
 
     // Compare against cached token
-    const cachedToken = localStorage.getItem("nutifar_push_token");
+    const cachedToken = localStorage.getItem("nutifar_fcm_token");
+    const nutifarToken = localStorage.getItem("nutifar_push_token");
 
     // Already in sync
     if (cachedToken === currentToken) {
       return {
         synced: true,
         changed: false,
-        token: currentToken,
+        token: nutifarToken,
       };
     }
 
     // Notify backend
     await devices.refreshToken({
+      nutifarToken,
       pushToken: currentToken,
       provider: "FCM",
       platform: "WEB",
     });
 
     // Cache latest token
-    localStorage.setItem("nutifar_push_token", currentToken);
+    localStorage.setItem("nutifar_fcm_token", currentToken);
 
     return {
       synced: true,
       changed: true,
-      token: currentToken,
+      token: nutifarToken,
     };
   }
   // =========================================

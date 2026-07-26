@@ -55,6 +55,7 @@ export function useEmailPlayground() {
   const sdk = useMemo(
     () =>
       Nutifar({
+        // apiKey: process.env.NEXT_PUBLIC_NUTIFAR_API_KEY_DEV!,
         apiKey: process.env.NEXT_PUBLIC_NUTIFAR_API_KEY!,
       }),
     [],
