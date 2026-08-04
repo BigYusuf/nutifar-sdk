@@ -1,6 +1,6 @@
 {
   "name": "@nutifar/node",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Official Nutifar Node SDK",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -12,27 +12,23 @@
       "require": "./dist/index.js"
     }
   },
-  "bin": {
-    "nutifar": "./dist/cli/index.mjs"
-  },
   "files": [
-    "dist",
-    "templates"
+    "dist"
+  ],
+  "keywords": [
+    "Nutifar backend SDK",
+    "Node SDK",
+    "Server-side Email, Push, Sms, In-app Notifications",
+    "Sends Email, Push, Sms, In-app Notifications",
+    "Realtime"
   ],
   "scripts": {
-    "build": "pnpm run build:sdk && pnpm run build:cli",
-    "build:sdk": "tsup --config tsup.config.ts",
-    "build:cli": "tsup --config tsup.cli.config.ts",
+    "build": "tsup --config tsup.config.ts",
     "dev": "tsup --config tsup.config.ts --watch",
     "clean": "rm -rf dist"
   },
   "dependencies": {
-    "@nutifar/core": "workspace:*",
-    "firebase": "^12.13.0",
-    "ua-parser-js": "^2.0.10"
-  },
-  "devDependencies": {
-    "@types/node": "^24.12.0"
+    "@nutifar/core": "workspace:*"
   },
   "engines": {
     "node": ">=18"

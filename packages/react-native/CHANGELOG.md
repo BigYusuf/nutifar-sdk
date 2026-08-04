@@ -1,5 +1,11 @@
 # @nutifar/react-native
 
+## 1.0.2
+
+### Patch Changes
+
+- add suitable READ ME and remove unused packages
+
 ## 1.0.1
 
 ### Patch Changes

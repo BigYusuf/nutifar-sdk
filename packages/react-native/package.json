@@ -1,6 +1,6 @@
 {
   "name": "@nutifar/react-native",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -16,7 +16,17 @@
     "dev": "tsup --watch",
     "clean": "rm -rf dist"
   },
-  "keywords": [],
+  "keywords": [
+    "React Native",
+    "Nutifar",
+    "SDK",
+    "Send Email, Push, Sms, inapp Notifications for React Native",
+    "Receive Email, Push, Sms, inapp Notifications for React Native",
+    " Bare React Native",
+    "Push Notifications",
+    "MMKV",
+    "Socket.IO"
+  ],
   "author": "",
   "license": "ISC",
   "description": "Nutifar SDK for Bare React Native",

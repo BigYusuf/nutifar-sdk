@@ -11,7 +11,6 @@ export type EmailAttachment = {
 };
 
 export type SendEmailInput = {
-  appId: string;
   to: EmailAddressInput | EmailAddressInput[];
   cc?: EmailAddressInput | EmailAddressInput[];
   bcc?: EmailAddressInput | EmailAddressInput[];

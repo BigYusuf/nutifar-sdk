@@ -6,7 +6,7 @@
     "moduleResolution": "Bundler",
     "rootDir": "src",
     "outDir": "dist",
-    "lib": ["ES2020", "DOM"],
+    "lib": ["ES2020"],
     "types": []
   },
   "include": ["src"]

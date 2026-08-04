@@ -2,9 +2,9 @@
 
 <div align="center">
 
-<h3>Official Node Push Notification SDK for Nutifar</h3>
+<h3>Official Server-Side SDK for Nutifar</h3>
 
-Integrate reliable node push notifications into any modern JavaScript application with minimal setup.
+Send transactional and broadcast notifications — Email, Push, SMS, and In-App — from your Node.js backend with a single, consistent API.
 
 <p>
 
@@ -21,30 +21,31 @@ Integrate reliable node push notifications into any modern JavaScript applicatio
 
 # Overview
 
-The **Nutifar Node SDK** provides everything you need to integrate browser push notifications using **Firebase Cloud Messaging (FCM)** and the Nutifar platform.
+The **Nutifar Node SDK** is the server-side interface to the Nutifar notification platform. It's built for backends — Express, Nest, Fastify, serverless functions, workers — that need to **trigger** notifications, not receive them.
 
-Whether you're building with **React**, **Next.js**, **Vue**, **Angular**, **Vite**, or plain JavaScript, the SDK offers a consistent, TypeScript-first developer experience.
+It's a thin, typed wrapper around the Nutifar API for sending across all four channels: **Email, Push, SMS, and In-App**.
+
+> Building a frontend or mobile app that needs to *receive* push notifications or listen for in-app events? Use [`@nutifar/web`](https://www.npmjs.com/package/@nutifar/web), [`@nutifar/expo`](https://www.npmjs.com/package/@nutifar/expo) or [`@nutifar/react-native`](https://www.npmjs.com/package/@nutifar/react-native) instead. This package is send-only.
 
 ---
 
 # Features
 
-- 🌐 Browser-first SDK
-- 🔔 Firebase Cloud Messaging (FCM)
-- ⚡ Lightweight and tree-shakeable
-- 📦 TypeScript-first
-- 🛠 Built-in CLI
-- 🔒 Secure communication with Nutifar
+- 📤 Send Email, Push, SMS, and In-App notifications from one client
+- 🧩 Single or bulk/batch sends
+- 📄 Template-based sends with variable substitution
+- 🔑 Multi-tenant API key support
+- 📦 TypeScript-first, fully typed requests and responses
+- 🔒 Server-only — no browser or device APIs involved
+- ⚡ Lightweight — depends only on `@nutifar/core`
 - 🚀 Production-ready
-- 🧩 Framework agnostic
 
 ---
 
 # Requirements
 
 - Node.js 18+
-- Modern browser with Service Worker support
-- Firebase Cloud Messaging (FCM)
+- A Nutifar account and server-side API key
 
 ---
 
@@ -70,132 +71,151 @@ yarn add @nutifar/node
 
 ---
 
-# Initialize Your Project
-
-After installing the SDK, initialize your project.
-
-```bash
-npx nutifar init
-```
-
-The CLI will automatically:
-
-- Copy `firebase-messaging-sw.js`
-- Create the `public/` directory if needed
-- Configure your project for background notifications
-
----
-
 # Quick Start
 
 ```ts
 import { Nutifar } from "@nutifar/node";
 
-const nutifar = new Nutifar({
-  apiKey: "YOUR_PUBLIC_API_KEY",
+const sdk = Nutifar({
+  apiKey: process.env.NUTIFAR_API_KEY!,
+});
+```
+
+### Send an email
+
+```ts
+await sdk.notification.sendEmail({
+  to: "user@example.com",
+  subject: "Welcome to Teepas",
+  html: "<p>Hey Yusuf, glad to have you on board.</p>",
+});
+```
+
+### Send an SMS
+
+```ts
+await sdk.notification.sendSMS({
+  to: "+2348012345678",
+  body: "Your OTP is 123456. Expires in 5 minutes.",
+});
+```
+
+### Send a push notification
+
+```ts
+await sdk.notification.sendPush({
+  to: "user_123", // nutifarToken or externalId
+  title: "Your order shipped",
+  body: "Track your package in the app.",
+});
+```
+
+### Send an in-app notification
+
+```ts
+await sdk.notification.sendInApp({
+  to: "user_123",
+  title: "New comment",
+  body: "Someone replied to your post.",
+});
+```
+
+---
+
+# Templates
+
+Every channel accepts an optional `template` in place of (or alongside) raw content:
+
+```ts
+await sdk.notification.sendEmail({
+  to: "user@example.com",
+  subject: "Payment received",
+  template: {
+    name: "payment-received",
+    data: { amount: "₦25,000" },
+  },
+});
+```
+
+---
+
+# Multiple Recipients
+
+`sms`, `push`, and `inapp` accept a single recipient or an array; `email` accepts a string, an `{ email, name }` object, or an array of either — with optional `cc`, `bcc`, and `from` too:
+
+```ts
+await sdk.notification.sendEmail({
+  to: [{ email: "a@example.com", name: "A" }, "b@example.com"],
+  cc: "manager@example.com",
+  subject: "Weekly digest",
+  html: "<p>...</p>",
 });
 
-await nutifar.initialize();
+await sdk.notification.sendSMS({
+  to: ["+2348012345678", "+2348098765432"],
+  body: "Reminder: rent due tomorrow.",
+});
 ```
 
 ---
 
-# Service Worker
+# Attachments
 
-The CLI generates the following file inside your project:
-
-```text
-public/
-└── firebase-messaging-sw.js
-```
-
-Contents:
-
-```js
-importScripts("https://api.nutifar.buzz/sw/v1/firebase-messaging-sw.js");
-```
-
-The hosted service worker is maintained by Nutifar and handles background notification delivery.
-
----
-
-# CLI
-
-The SDK ships with a built-in CLI.
-
-## Initialize
-
-```bash
-npx nutifar init
-```
-
-## Help
-
-```bash
-npx nutifar --help
-```
-
-## Version
-
-```bash
-npx nutifar --version
-```
-
-### Upcoming Commands
-
-```bash
-nutifar doctor
-nutifar upgrade
+```ts
+await sdk.notification.sendEmail({
+  to: "user@example.com",
+  subject: "Your invoice",
+  html: "<p>Attached.</p>",
+  attachments: [
+    { filename: "invoice.pdf", url: "https://cdn.example.com/invoice.pdf" },
+  ],
+});
 ```
 
 ---
 
-# Supported Frameworks
+# Configuration
 
-The SDK works with any modern JavaScript framework.
+```ts
+const sdk = Nutifar({
+  apiKey: process.env.NUTIFAR_API_KEY!,
+});
+```
 
-- React
-- Next.js
-- Vue
-- Angular
-- Svelte
-- Vite
-- Vanilla JavaScript
+---
+
+# Response Shape
+
+Every `sendEmail` / `sendSMS` / `sendPush` / `sendInApp` call resolves to the same response shape — the notification is accepted and queued, not delivered synchronously:
+
+```ts
+type NotificationResponse = {
+  success: boolean;
+  message?: string;
+  data: {
+    success: boolean;
+    eventId: string;
+  };
+};
+```
+
+Use `eventId` to correlate with delivery status once webhooks/analytics land (see Roadmap).
 
 ---
 
 # TypeScript
 
-The SDK is written entirely in TypeScript and includes complete type definitions.
+The SDK is written entirely in TypeScript with complete type definitions for every channel's input and response — no additional `@types` package needed.
 
 ```ts
-import { Nutifar } from "@nutifar/node";
+import type {
+  SendEmailInput,
+  SendSMSInput,
+  SendPushInput,
+  SendInAppInput,
+  NotificationResponse,
+} from "@nutifar/node";
 ```
-
-No additional typings are required.
-
----
-
-# Examples
-
-Example applications are available in the SDK repository.
-
-- React + Vite
-- Next.js
-- Vanilla JavaScript
-
-More examples will be added over time.
-
----
-
-# Browser Compatibility
-
-Supported browsers must support:
-
-- Service Workers
-- Push API
-- Notifications API
-- Firebase Cloud Messaging
 
 ---
 
@@ -203,18 +223,17 @@ Supported browsers must support:
 
 ## Available
 
-- ✅ Node SDK
-- ✅ Node CLI
+- ✅ Email sending (with templates, attachments, cc/bcc, multi-recipient)
+- ✅ SMS sending (single or bulk)
+- ✅ Push sending
+- ✅ In-app sending
 
 ## Coming Soon
 
-- Device Management
-- Notification Analytics
-- Rich Notifications
-- Deep Linking
-- Notification Inbox
-- Message Templates
-- Offline Queue
+- Delivery status webhooks helper
+- Notification analytics
+- Batch/bulk send endpoint
+- Scheduled sends
 
 ---
 

@@ -1,6 +1,6 @@
 {
   "name": "@nutifar/expo",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -19,11 +19,15 @@
   "keywords": [
     "Nutifar",
     "SDK",
+    "email",
+    "push",
+    "sms",
     "React Native",
     "Expo",
+    "Send Email, SMS, Push, In App Notifications",
+    "Receive Email, SMS, Push, In App Notifications",
     "Push Notifications",
-    "Realtime",
-    "Socket.IO"
+    "Realtime"
   ],
   "author": "BigYusuf",
   "license": "ISC",

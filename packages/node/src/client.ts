@@ -1,5 +1,4 @@
 import { createSDK, UnauthorizedError } from "@nutifar/core";
-import { WebPushManager } from "./push/webPush";
 
 export interface NodeSDKConfig {
   apiKey: string;
@@ -42,13 +41,6 @@ export const Nutifar = (config: NodeSDKConfig) => {
         ],
       },
     },
-  });
-
-  // =========================================
-  // PUSH MODULE (FULLY CONTROLLED BY YOU)
-  // =========================================
-  sdk.push = new WebPushManager({
-    devices: sdk.device,
   });
 
   return sdk;
