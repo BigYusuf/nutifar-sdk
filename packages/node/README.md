@@ -1,14 +1,14 @@
-# 🌐 Nutifar Web SDK
+# 🌐 Nutifar Node SDK
 
 <div align="center">
 
-<h3>Official Web Push Notification SDK for Nutifar</h3>
+<h3>Official Node Push Notification SDK for Nutifar</h3>
 
-Integrate reliable web push notifications into any modern JavaScript application with minimal setup.
+Integrate reliable node push notifications into any modern JavaScript application with minimal setup.
 
 <p>
 
-[![npm](https://img.shields.io/npm/v/@nutifar/web)](https://www.npmjs.com/package/@nutifar/web)
+[![npm](https://img.shields.io/npm/v/@nutifar/node)](https://www.npmjs.com/package/@nutifar/node)
 [![License](https://img.shields.io/github/license/BigYusuf/nutifar-sdk)](https://github.com/BigYusuf/nutifar-sdk/blob/main/LICENSE)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node](https://img.shields.io/badge/Node-%3E%3D18-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -21,7 +21,7 @@ Integrate reliable web push notifications into any modern JavaScript application
 
 # Overview
 
-The **Nutifar Web SDK** provides everything you need to integrate browser push notifications using **Firebase Cloud Messaging (FCM)** and the Nutifar platform.
+The **Nutifar Node SDK** provides everything you need to integrate browser push notifications using **Firebase Cloud Messaging (FCM)** and the Nutifar platform.
 
 Whether you're building with **React**, **Next.js**, **Vue**, **Angular**, **Vite**, or plain JavaScript, the SDK offers a consistent, TypeScript-first developer experience.
 
@@ -53,19 +53,19 @@ Whether you're building with **React**, **Next.js**, **Vue**, **Angular**, **Vit
 ### npm
 
 ```bash
-npm install @nutifar/web
+npm install @nutifar/node
 ```
 
 ### pnpm
 
 ```bash
-pnpm add @nutifar/web
+pnpm add @nutifar/node
 ```
 
 ### yarn
 
 ```bash
-yarn add @nutifar/web
+yarn add @nutifar/node
 ```
 
 ---
@@ -89,7 +89,7 @@ The CLI will automatically:
 # Quick Start
 
 ```ts
-import { Nutifar } from "@nutifar/web";
+import { Nutifar } from "@nutifar/node";
 
 const nutifar = new Nutifar({
   apiKey: "YOUR_PUBLIC_API_KEY",
@@ -169,7 +169,7 @@ The SDK works with any modern JavaScript framework.
 The SDK is written entirely in TypeScript and includes complete type definitions.
 
 ```ts
-import { Nutifar } from "@nutifar/web";
+import { Nutifar } from "@nutifar/node";
 ```
 
 No additional typings are required.
@@ -203,8 +203,8 @@ Supported browsers must support:
 
 ## Available
 
-- ✅ Web SDK
-- ✅ Web CLI
+- ✅ Node SDK
+- ✅ Node CLI
 
 ## Coming Soon
 
