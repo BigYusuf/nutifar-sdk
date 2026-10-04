@@ -1,4 +1,5 @@
 import { createSDK, devUrl } from "@nutifar/core";
+import RNEventSource from "react-native-sse";
 
 import { ReactNativePushManager } from "./push/manager";
 
@@ -34,6 +35,10 @@ export const createReactNativeClient = (config: ReactNativeSDKConfig) => {
         ],
       },
     },
+    // NEW — react-native-sse mirrors the EventSource API closely enough
+    // (onopen/onerror/addEventListener/close) that InAppStream needs no
+    // platform branching at all
+    createEventSource: (url: string) => new RNEventSource(url) as any,
 
     debug: __DEV__,
   });

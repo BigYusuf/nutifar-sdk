@@ -17,7 +17,7 @@ export type NotificationSource = "API" | "CAMPAIGN";
 
 export type CreateNotificationInput = {
   type: string; // required server-side ("tenantId and type are required")
-  source?: NotificationSource; 
+  source?: NotificationSource;
 
   templateId?: string | null;
   templateName?: string | null;
@@ -49,5 +49,9 @@ export type NotificationResponse = {
 };
 
 export interface NotificationClient {
+  get: <R>(url: string) => Promise<R>;
   post: <T, R>(url: string, data?: T) => Promise<R>;
+  put: <T, R>(url: string, data?: T) => Promise<R>;
+  patch: <T, R>(url: string, data?: T) => Promise<R>;
+  delete: <R>(url: string) => Promise<R>;
 }

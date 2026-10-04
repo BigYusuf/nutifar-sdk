@@ -1,6 +1,6 @@
 {
   "name": "@nutifar/expo",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -39,6 +39,7 @@
     "expo-device": "^56.0.4",
     "expo-notifications": "^56.0.13",
     "react-native-mmkv": "^4.3.1",
+    "react-native-sse": "^1.2.1",
     "socket.io-client": "^4.8.3"
   },
   "peerDependencies": {

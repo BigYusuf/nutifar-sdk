@@ -1,6 +1,6 @@
 {
   "name": "@nutifar/react-native",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -34,6 +34,7 @@
     "@nutifar/core": "workspace:*",
     "@react-native-firebase/messaging": "^25.1.0",
     "react-native-mmkv": "^4.3.1",
+    "react-native-sse": "^1.2.1",
     "socket.io-client": "^4.8.3"
   },
   "peerDependencies": {

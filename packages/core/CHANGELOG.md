@@ -1,5 +1,11 @@
 # @nutifar/core
 
+## 1.0.4
+
+### Patch Changes
+
+- adding inapp and schedule notifications
+
 ## 1.0.3
 
 ### Patch Changes

@@ -46,6 +46,12 @@ export const Nutifar = (config: WebSDKConfig) => {
         ],
       },
     },
+    // NEW — native browser EventSource. `withCredentials: true` so the
+    // stream request carries cookies same as your other requests do via
+    // `credentials: "include"` above — matters if `/notifications/stream`
+    // ever sits behind anything cookie-checked in front of the token check.
+    createEventSource: (url: string) =>
+      new EventSource(url, { withCredentials: true }) as any,
   });
 
   // =========================================

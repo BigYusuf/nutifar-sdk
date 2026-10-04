@@ -54,6 +54,17 @@ export const createClient = ({
         body,
         ...options,
       }) as Promise<TResponse>,
+    patch: <TRequest, TResponse>(
+      url: string,
+      body: TRequest,
+      options: HttpOptions = {},
+    ) =>
+      http({
+        url: request(url),
+        method: "PATCH",
+        body,
+        ...options,
+      }) as Promise<TResponse>,
 
     delete: <TResponse>(url: string, options: HttpOptions = {}) =>
       http({

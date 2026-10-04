@@ -25,3 +25,30 @@ export type SendEmailInput = {
 
   metadata?: Record<string, any>; // free-form passthrough, merged in but won't clobber role/channel
 };
+
+export type InAppNotification = {
+  id: string;
+  tenantId: string;
+  appId?: string | null;
+  externalId: string;
+  deliveryId: string;
+  title?: string | null;
+  body?: string | null;
+  data?: any;
+  readAt?: string | null;
+  createdAt: string;
+};
+
+export type StreamState = "idle" | "connecting" | "open" | "reconnecting" | "error";
+
+export type InAppEventMap = {
+  "notification.created": InAppNotification;
+  "notification.read": InAppNotification;
+};
+
+export interface EventSourceLike {
+  onopen: (() => void) | null;
+  onerror: ((err: any) => void) | null;
+  addEventListener(type: string, listener: (event: any) => void): void;
+  close(): void;
+}

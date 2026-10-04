@@ -1,5 +1,13 @@
 # @nutifar/web
 
+## 1.0.2
+
+### Patch Changes
+
+- adding inapp and schedule notifications
+- Updated dependencies
+  - @nutifar/core@1.0.4
+
 ## 1.0.1
 
 ### Patch Changes
